@@ -12,3 +12,6 @@ user_settings.yaml
 __pycache__/
 *.pyc
 *.pyo
+
+# Claude設定
+settings.local.json
