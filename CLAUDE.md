@@ -32,11 +32,9 @@
 │   ├── user_settings.yaml #アプリのユーザ設定
 │   └── core_settings.yaml #アプリのコア設定
 ├── docs/ #人間向けドキュメントを置いておく/
-│   └── implementation-plan/
-│       ├── 00_overview.md        # 全体構成の概要（短く）
-│       ├── 01_setup.md           # 完了済み
-│       ├── 02_domain-layer.md    # 現在対応中
-│       └── 03_infra-layer.md     # 未着手
+│   └── implementation-plan/ # 実装プランを置いておく
+├── tests/
+│   └── textures/ # テスト用の固定入力データ（画像・テキストなど）
 ├── CLAUDE.md
 └── 要件定義書.md
 ```
