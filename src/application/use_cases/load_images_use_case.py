@@ -45,7 +45,9 @@ class LoadImagesUseCase:
         for path in path_list:
             try:
                 images = self._loader.load_from_path(path)
-            except FileNotFoundError as exc:
+            except (FileNotFoundError, OSError) as exc:
+                # ロック中・権限なし等の OS エラーはここで補足し警告として通知する。
+                # 変換フェーズより前に検出できるため、変換開始前にユーザーへ即時フィードバックできる。
                 if warning_cb:
                     warning_cb(f"[警告] {exc}")
                 continue

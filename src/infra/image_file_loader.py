@@ -81,5 +81,8 @@ class ImageFileLoader(IImageLoader):
             with Image.open(path) as img:
                 fmt = img.format or path.suffix.lstrip(".").upper()
             return ImageFile(path=path, format=fmt)
-        except (UnidentifiedImageError, OSError):
+        except UnidentifiedImageError:
+            # 有効な画像形式でないファイルはスキップ（警告不要）
             return None
+        # OSError（ファイルロック・権限不足等）は握り潰さず上位に伝播させる。
+        # LoadImagesUseCase が warning_cb を通じてユーザーへ通知する。

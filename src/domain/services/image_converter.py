@@ -70,6 +70,7 @@ class ImageConverter:
             PIL Image オブジェクト。
         """
         img = Image.open(image_file.path)
+        img.load()
         if getattr(img, "is_animated", False):
             img.seek(_GIF_FRAME_INDEX)
             img = img.copy()
