@@ -77,8 +77,8 @@ pytest ファイル: `tests/domain/test_conversion_settings.py`
 対象ファイル: `src/domain/services/image_converter.py`  
 pytest ファイル: `tests/domain/test_image_converter.py`
 
-| 完了 | ID | 分類 | 種別 | テスト名 | 入力条件 | 期待結果 |
-|:---:|---|---|:---:|---|---|---|
+| 完了 | ID | 分類 | 種別 | テスト名 | 入力条件 | 期待結果 | 備考 |
+|:---:|---|---|:---:|---|---|---|---|
 | [x] | TC-IC-001 | 正常系 | 自動 | PNG→PNG 原寸変換 | PNG 画像, `scale=1.0`, `output_format="PNG"` | 同サイズの PNG ファイルが出力先に保存される |
 | [x] | TC-IC-002 | 正常系 | 自動 | PNG→JPEG 変換（RGBA画像） | RGBA モード PNG, `output_format="JPEG"` | 白背景合成された JPEG が保存される（透過なし） |
 | [x] | TC-IC-003 | 正常系 | 自動 | PNG→BMP 変換（RGBA画像） | RGBA モード PNG, `output_format="BMP"` | RGB に変換された BMP が保存される |
@@ -95,7 +95,7 @@ pytest ファイル: `tests/domain/test_image_converter.py`
 | [x] | TC-IC-014 | 境界値 | 自動 | scale=1.0 のとき resize をスキップ | PNG, `scale=1.0` | リサイズ処理が呼ばれない（画像サイズが変わらない） |
 | [x] | TC-IC-015 | 境界値 | 自動 | tolerance=0 で完全一致のみ透明化 | 背景色と 1 違いのピクセルを含む PNG, `tolerance=0` | 完全一致ピクセルのみ透明化され、隣接色は不変 |
 | [x] | TC-IC-016 | 境界値 | 自動 | tolerance=255 で全ピクセル透明化 | カラー PNG, `transparency_color=Color(0,0,0)`, `tolerance=255` | すべてのピクセルが透明化される |
-| [ ] | TC-IC-017 | 異常系 | 手動 | 入力ファイルがロック中（OSError） | 他プロセスがロックしたファイルを読み込み | `OSError` が発生する |
+| [x] | TC-IC-017 | 異常系 | 手動 | 入力ファイルがロック中（OSError） | 他プロセスがロックしたファイルを読み込み | `OSError` が発生する | 変換時でなく読み込み時に補足することを確認済
 | [ ] | TC-IC-018 | 異常系 | 手動 | 出力先の書き込み権限なし | 書き込み不可ディレクトリへの保存 | `OSError`（またはその派生例外）が発生する |
 
 ---
@@ -129,8 +129,8 @@ pytest ファイル: `tests/infra/test_image_file_loader.py`
 対象ファイル: `src/infra/settings_repository.py`  
 pytest ファイル: `tests/infra/test_settings_repository.py`
 
-| 完了 | ID | 分類 | 種別 | テスト名 | 入力条件 | 期待結果 |
-|:---:|---|---|:---:|---|---|---|
+| 完了 | ID | 分類 | 種別 | テスト名 | 入力条件 | 期待結果 | 備考 |
+|:---:|---|---|:---:|---|---|---|---|
 | [x] | TC-SR-001 | 正常系 | 自動 | core_settings.yaml の読み込み | 有効な `core_settings.yaml` | `scale`, `thumbnail`, `transparency` キーを含む辞書が返る |
 | [x] | TC-SR-002 | 正常系 | 自動 | user_settings.yaml の読み込み | 有効な `user_settings.yaml` | 保存済みのキーと値が辞書として返る |
 | [x] | TC-SR-003 | 正常系 | 自動 | save → load で値が復元される | 任意の辞書を `save_user_settings()` した後 `load_user_settings()` | 保存した辞書と同一の辞書が返る |
@@ -141,7 +141,7 @@ pytest ファイル: `tests/infra/test_settings_repository.py`
 | [x] | TC-SR-008 | 境界値 | 自動 | YAML の内容が空（ファイルは存在するが 0 バイト） | 空の YAML ファイルを `load_user_settings()` | 空辞書 `{}` が返る |
 | [x] | TC-SR-009 | 境界値 | 自動 | YAML の内容がリスト（辞書でない） | `- item1\n- item2` が書かれた YAML ファイル | 空辞書 `{}` が返る |
 | [x] | TC-SR-010 | 境界値 | 自動 | 出力先親ディレクトリが存在しない | 存在しないディレクトリ配下を `user_path` に指定して save | 親ディレクトリが自動作成され、保存成功する |
-| [x] | TC-SR-011 | 異常系 | 手動 | 読み取り不可ファイル | 権限を除去した YAML ファイルを load | `OSError`（またはその派生例外）が発生する |
+| [x] | TC-SR-011 | 異常系 | 手動 | 読み取り不可ファイル | 権限を除去した YAML ファイルを load | `OSError`（またはその派生例外）が発生する | 使用ファイル: xxx_locked_yaml.ps1, locked_settings_test.py
 
 ---
 
